@@ -87,12 +87,10 @@ public class PetStoreTests {
 		int new_id = id;
 		String uploadImage_url_endpoint = "/uploadImage";
 
-		System.out.println(uploadImage_url + new_id + uploadImage_url_endpoint);
-
-		File imagePath = new File(".//imagefolder//portrait-pomeranian-dog.jpg");
-
 		RestAssured.given()
-				.multiPart("image", imagePath).when().post(uploadImage_url + new_id + uploadImage_url_endpoint).then()
+				.header("Content_Type", "multipart/form-data")
+				.formParam("additionalMetadata", "Testing")
+				.multiPart("file", new File(".\\imagefolder\\portrait-pomeranian-dog.jpg")).when().post(uploadImage_url + new_id + uploadImage_url_endpoint).then()
 				.statusCode(200);
 	}
 
