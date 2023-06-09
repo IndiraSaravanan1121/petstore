@@ -36,7 +36,7 @@ public class PetStoreTests {
 
 		String post_url = getURL().getString("petstore_base_url");
 
-		JSONObject data = readJson.readJsonFile(".//body.json");
+		JSONObject data = readJson.readJsonFile(".//src//test//resources//body.json");
 
 		id = RestAssured.given().log().all().contentType(ContentType.JSON).body(data.toString()).when().post(post_url)
 				.jsonPath().getInt("id");
@@ -87,12 +87,10 @@ public class PetStoreTests {
 		int new_id = id;
 		String uploadImage_url_endpoint = "/uploadImage";
 
-		System.out.println(uploadImage_url + new_id + uploadImage_url_endpoint);
-
-		File imagePath = new File(".//imagefolder//portrait-pomeranian-dog.jpg");
-
 		RestAssured.given()
-				.multiPart("image", imagePath).when().post(uploadImage_url + new_id + uploadImage_url_endpoint).then()
+				.header("Content_Type", "multipart/form-data")
+				.formParam("additionalMetadata", "Testing")
+				.multiPart("file", new File(".\\imagefolder\\portrait-pomeranian-dog.jpg")).when().post(uploadImage_url + new_id + uploadImage_url_endpoint).then()
 				.statusCode(200);
 	}
 
@@ -103,7 +101,7 @@ public class PetStoreTests {
 	public void updatePet() {
 		String post_url = getURL().getString("petstore_base_url");
 
-		JSONObject data = readJson.readJsonFile(".//updatepet.json");
+		JSONObject data = readJson.readJsonFile(".//src//test//resources//updatepet.json");
 
 		String name = RestAssured.given().log().all().contentType(ContentType.JSON).body(data.toString()).when().put(post_url)
 				.jsonPath().getString("name");

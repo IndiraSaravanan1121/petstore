@@ -24,7 +24,7 @@ public class ExtentReportUtility implements ITestListener {
 	String repName;
 	
 	@BeforeTest
-	public void onStart(ITestContext testCOntext) {
+	public void onStart(ITestContext testContext) {
 		
 		String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		repName = "Test-Report-"+timestamp+".html";
@@ -32,12 +32,12 @@ public class ExtentReportUtility implements ITestListener {
 		sparkReport = new ExtentSparkReporter(".\\reports\\"+repName);
 		
 		sparkReport.config().setDocumentTitle("RestAssuredProject");
-		sparkReport.config().setReportName("Reqres.in");
+		sparkReport.config().setReportName("Pepstore.swaggers");
 		sparkReport.config().setTheme(Theme.DARK);
 		
 		extent = new ExtentReports();
 		extent.attachReporter(sparkReport);
-		extent.setSystemInfo("Application", "Reqres.in");
+		extent.setSystemInfo("Application", "Pepstore.swagger");
 		extent.setSystemInfo("Operating System", System.getProperty("os.name"));
 		extent.setSystemInfo("User Name", System.getProperty("user name"));
 		extent.setSystemInfo("Environment", "QA");
